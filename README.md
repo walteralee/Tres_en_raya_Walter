@@ -72,6 +72,8 @@ cd Tres_en_raya_Walter
 
 ---
 
+Puedes abrir rápidamente el proyecto ejecutando el archivo `correr.bat`.
+
 # 4. Abrir el proyecto en Android Studio
 
 1. Abre Android Studio.
