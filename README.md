@@ -52,12 +52,6 @@ git --version
 
 Abre CMD en la carpeta donde quieras guardar el proyecto.
 
-Ejemplo:
-
-```bash
-cd D:\Informatica
-```
-
 Clona el repositorio:
 
 ```bash
