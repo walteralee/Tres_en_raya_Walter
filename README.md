@@ -1,31 +1,57 @@
-# Tres en raya
-
-App Android del clásico tres en raya: juega contra un amigo en el mismo móvil o contra una máquina que no se deja ganar.
+<h1 align="center">Tres en raya</h1>
 
 <p align="center">
-  <img src="imagenes/capturas/inicio.png" width="240" alt="Pantalla de inicio" />
-  &nbsp;
-  <img src="imagenes/capturas/contra_maquina.png" width="240" alt="Partida contra la máquina" />
-  &nbsp;
-  <img src="imagenes/capturas/dos_jugadores.png" width="240" alt="Partida a dos jugadores" />
+  <img src="https://img.shields.io/badge/Android-7.0%2B-3DDC84?logo=android&logoColor=white" alt="Android 7.0+" />
+  <img src="https://img.shields.io/badge/Java-11-ED8B00?logo=openjdk&logoColor=white" alt="Java 11" />
+  <img src="https://img.shields.io/badge/Gradle-8.7-02303A?logo=gradle&logoColor=white" alt="Gradle 8.7" />
+  <img src="https://img.shields.io/badge/tests-14%20pasan-brightgreen" alt="14 tests" />
 </p>
+
+**Tres en raya** es una app para Android del juego de siempre, hecha en Java. Tiene dos modos: **dos jugadores**, para jugar con un amigo en el mismo móvil, y **contra la máquina**, una inteligencia artificial que gana cuando puede, tapa tus jugadas, usa trampas clásicas y corta tus dobles amenazas. **No se le puede ganar:** como mucho le sacarás un empate.
+
+<p align="center">
+  <img src="imagenes/capturas/inicio.png" width="230" alt="Pantalla de inicio" />
+  &nbsp;
+  <img src="imagenes/capturas/contra_maquina.png" width="230" alt="Partida contra la máquina" />
+  &nbsp;
+  <img src="imagenes/capturas/dos_jugadores.png" width="230" alt="Partida a dos jugadores" />
+</p>
+
+---
+
+## Instalación
+
+No hace falta instalar nada más ni tocar código. Solo necesitas un móvil Android.
 
 <p align="center">
   <a href="https://github.com/walteralee/Tres_en_raya_Walter/releases/latest/download/TresEnRaya.apk">
-    <img src="https://img.shields.io/badge/Descargar%20APK-v1.0-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Descargar APK" />
+    <img src="https://img.shields.io/badge/Descargar%20APK-v1.0-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Descargar APK" height="50" />
   </a>
 </p>
+
+<p align="center">
+  ¿Estás en el ordenador? Escanea el código con la cámara del móvil:<br /><br />
+  <img src="imagenes/qr_descarga.png" width="160" alt="Código QR para descargar el APK" />
+</p>
+
+1. **Descarga** el APK desde el móvil: pulsa el botón verde o escanea el QR.
+2. **Ábrelo.** Si Android lo pide, toca **Ajustes** y activa **"Permitir de esta fuente"**.
+3. **Pulsa Instalar** y abre **Tres en raya**.
+
+> Funciona en cualquier móvil con Android 7.0 o superior. Ocupa 6 MB, no pide ningún permiso y no necesita internet para jugar.
+> Para desinstalarlo, mantén pulsado el icono y elige **Desinstalar**.
 
 ---
 
 ## Funcionalidades
 
 - **Dos jugadores:** dos personas se turnan en el mismo móvil (O contra X). Quién empieza se sortea en cada partida.
-- **Contra la máquina:** juegas con la X contra la máquina (O). La máquina:
-  - gana si puede y tapa tus jugadas ganadoras,
-  - usa aperturas y trampas (esquina, centro, triángulo, L corta y L larga),
-  - corta tus dobles amenazas, así que **como mucho le sacarás un empate**.
-- El resultado (victoria o empate) se muestra en pantalla y a los 2 segundos empieza otra partida.
+- **Contra la máquina:** juegas con la X y la máquina con la O. En cada turno la máquina:
+  1. gana si puede,
+  2. tapa tu jugada si vas a ganar,
+  3. aplica aperturas y trampas (esquina, centro, triángulo, L corta y L larga),
+  4. corta tus dobles amenazas antes de que las hagas.
+- Al terminar se muestra el resultado (victoria o empate) y a los 2 segundos empieza otra partida.
 
 ## Tecnologías
 
@@ -33,41 +59,36 @@ App Android del clásico tres en raya: juega contra un amigo en el mismo móvil 
 |---|---|
 | Lenguaje | Java 11 |
 | Plataforma | Android (mínimo Android 7.0, API 24) |
-| Interfaz | XML con ConstraintLayout y Material 3 |
+| Interfaz | Layouts XML con ConstraintLayout y Material 3 |
 | Compilación | Gradle 8.7 con Android Gradle Plugin 8.6 |
 | Tests | JUnit 4 |
 
-## Instalar en tu móvil (3 pasos)
+## Ver o ejecutar el código
 
-1. Desde el móvil, pulsa **[Descargar APK](https://github.com/walteralee/Tres_en_raya_Walter/releases/latest/download/TresEnRaya.apk)**.
-2. Abre el archivo descargado. Si Android lo pide, permite **"Instalar apps desconocidas"** para tu navegador.
-3. Pulsa **Instalar** y abre **Tres en raya**.
+Solo si quieres ver o modificar el código. Necesitas [Android Studio](https://developer.android.com/studio), que ya trae todo lo necesario.
 
-> Funciona en cualquier móvil con Android 7.0 o superior. No pide ningún permiso.
-
-## Ejecutar desde el código
-
-Para ver el código o modificarlo necesitas [Android Studio](https://developer.android.com/studio).
-
-1. Clona el repositorio:
+1. Descarga el código: botón verde **Code > Download ZIP** de esta página y descomprímelo, o con Git:
 
    ```bash
    git clone https://github.com/walteralee/Tres_en_raya_Walter.git
    ```
 
-2. En Android Studio: **File > Open** y elige la carpeta `Tres_en_raya_Walter`. Espera a que termine la sincronización de Gradle.
-3. Elige un emulador o conecta tu móvil con la depuración USB activada y pulsa **Run ▶**.
+2. En Android Studio: **File > Open** y elige la carpeta `Tres_en_raya_Walter`. Espera a que termine de cargar (la primera vez tarda unos minutos).
+3. Pulsa **Run ▶**. Se abrirá en el emulador o en tu móvil si lo conectas por USB.
 
-También se puede compilar desde la terminal (con el SDK de Android instalado):
+Desde la terminal también se puede compilar y pasar los tests:
 
 ```bash
-./gradlew assembleDebug        # genera app/build/outputs/apk/debug/app-debug.apk
-./gradlew testDebugUnitTest    # ejecuta los tests
+./gradlew assembleDebug
 ```
 
-En Windows usa `gradlew.bat` en lugar de `./gradlew`.
+```bash
+./gradlew testDebugUnitTest
+```
 
-## Estructura
+En Windows usa `gradlew.bat` en lugar de `./gradlew`. El APK queda en `app/build/outputs/apk/debug/`.
+
+## Cómo está hecho
 
 ```text
 app/src/main/java/com/example/tres_en_raya/
@@ -75,11 +96,11 @@ app/src/main/java/com/example/tres_en_raya/
 ├── contra_amigo.java     partida a dos jugadores
 ├── contra_maquina.java   partida contra la máquina
 ├── Maquina.java          inteligencia de la máquina
-└── Reglas.java           reglas del juego: ganador, empate, tablero
+└── Reglas.java           reglas del juego: ganador, empate y tablero
 app/src/test/java/...     tests de Reglas y de Maquina
 ```
 
-El tablero es una matriz 3×3 donde cada jugador usa un número (1 o 5). Así la suma de una línea dice qué hay en ella: 3 o 15 es tres en raya, 2 o 10 es una amenaza. Los tests juegan **todas las partidas posibles** contra la máquina y comprueban que nunca pierde ni juega en una casilla ocupada.
+El tablero es una matriz 3×3 en la que cada jugador usa un número (1 o 5). Así basta con sumar una línea para saber qué hay en ella: 3 o 15 es tres en raya y 2 o 10 es una amenaza. Los tests juegan **todas las partidas posibles** contra la máquina y comprueban que nunca pierde ni juega en una casilla ocupada.
 
 ## Autor
 
@@ -87,12 +108,16 @@ El tablero es una matriz 3×3 donde cada jugador usa un número (1 o 5). Así la
 
 ---
 
-## English (short version)
+## English
 
-**Tic-tac-toe** for Android: play against a friend on the same phone or against an AI that can't be beaten.
+**Tres en raya** is a tic-tac-toe app for Android written in Java. Play against a friend on the same phone, or against an AI that wins when it can, blocks your moves, uses classic traps and stops your forks. It can't be beaten: the best you can get is a draw.
 
-- **Download:** [TresEnRaya.apk](https://github.com/walteralee/Tres_en_raya_Walter/releases/latest/download/TresEnRaya.apk). Open it on your phone, allow "Install unknown apps" if asked and tap Install (Android 7.0+).
-- **Modes:** two players, or against the machine (it wins when it can, blocks your threats and forks, and uses classic opening traps).
-- **Tech:** Java 11, Android (API 24+), Gradle, JUnit 4.
-- **Run from source:** clone the repo, open it in Android Studio and press Run, or use `./gradlew assembleDebug`.
-- **Author:** Walter Alejandro Cutiño Ledo · [github.com/walteralee](https://github.com/walteralee)
+**Install in 3 steps** (Android 7.0+, no permissions needed):
+
+1. Download **[TresEnRaya.apk](https://github.com/walteralee/Tres_en_raya_Walter/releases/latest/download/TresEnRaya.apk)** on your phone, or scan the QR code above.
+2. Open it. If Android asks, allow installs from this source.
+3. Tap **Install** and open **Tres en raya**.
+
+**Run from source:** open the project in Android Studio and press Run, or use `./gradlew assembleDebug`.
+**Tech:** Java 11, Android (API 24+), Gradle, JUnit 4.
+**Author:** Walter Alejandro Cutiño Ledo · [github.com/walteralee](https://github.com/walteralee)
