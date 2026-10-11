@@ -1,12 +1,30 @@
-*.iml
-.gradle
-/local.properties
-/.idea
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# Gradle
+.gradle/
+build/
+/app/build/
+
+# Configuración local (ruta del SDK de cada ordenador)
 local.properties
 
-/app/build
+# Android Studio / IntelliJ
+.idea/
+*.iml
+/captures/
+.externalNativeBuild/
+.cxx/
+
+# Archivos generados
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+output-metadata.json
+
+# Firmas (nunca subir claves)
+*.jks
+*.keystore
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
