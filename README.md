@@ -1,10 +1,10 @@
 <h1 align="center">Tres en raya</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Android-7.0%2B-3DDC84?logo=android&logoColor=white" alt="Android 7.0+" />
-  <img src="https://img.shields.io/badge/Java-11-ED8B00?logo=openjdk&logoColor=white" alt="Java 11" />
-  <img src="https://img.shields.io/badge/Gradle-8.7-02303A?logo=gradle&logoColor=white" alt="Gradle 8.7" />
-  <img src="https://img.shields.io/badge/tests-14%20pasan-brightgreen" alt="14 tests" />
+  <img src="imagenes/badges/android.svg" alt="Android 7.0+" />
+  <img src="imagenes/badges/java.svg" alt="Java 11" />
+  <img src="imagenes/badges/gradle.svg" alt="Gradle 8.7" />
+  <img src="imagenes/badges/tests.svg" alt="14 tests" />
 </p>
 
 **Tres en raya** es una app para Android del juego de siempre, hecha en Java. Tiene dos modos: **dos jugadores**, para jugar con un amigo en el mismo móvil, y **contra la máquina**, una inteligencia artificial que gana cuando puede, tapa tus jugadas, usa trampas clásicas y corta tus dobles amenazas. **No se le puede ganar:** como mucho le sacarás un empate.
@@ -25,7 +25,7 @@ No hace falta instalar nada más ni tocar código. Solo necesitas un móvil Andr
 
 <p align="center">
   <a href="https://github.com/walteralee/Tres_en_raya_Walter/releases/latest/download/TresEnRaya.apk">
-    <img src="https://img.shields.io/badge/Descargar%20APK-v1.0-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Descargar APK" height="50" />
+    <img src="imagenes/badges/descargar_apk.svg" alt="Descargar APK" height="50" />
   </a>
 </p>
 
