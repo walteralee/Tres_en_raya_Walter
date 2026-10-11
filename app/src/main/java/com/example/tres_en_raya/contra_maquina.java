@@ -10,314 +10,154 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
+/*
+ * Pantalla de juego contra la máquina.
+ * El usuario juega con la cruz (1 en el tablero) y la máquina con el círculo (5 en el tablero).
+ * Quién empieza se decide al azar en cada partida.
+ */
 public class contra_maquina extends AppCompatActivity {
 
-    private Maquina maquina = new Maquina();
+    private static final int USUARIO = Reglas.FICHA_1;
+    private static final int MAQUINA = Reglas.FICHA_5;
 
-    private ImageButton b0;
-    private ImageButton b1;
-    private ImageButton b2;
-    private ImageButton b3;
-    private ImageButton b4;
-    private ImageButton b5;
-    private ImageButton b6;
-    private ImageButton b7;
-    private ImageButton b8;
+    //Tiempo que se muestra el resultado antes de empezar otra partida
+    private static final long ESPERA_NUEVA_PARTIDA_MS = 2000;
+
+    private final Maquina maquina = new Maquina();
+    private final Random r = new Random();
+
+    //Botones del tablero en orden: la casilla i está en la fila i / 3 y la columna i % 3
+    private final ImageButton[] botones = new ImageButton[9];
 
     private TextView anotaciones;
 
-    Random r = new Random();
+    private final int[][] tablero = new int[3][3];
 
-    int contador;
-
-    int[][] tablero = new int[3][3];
+    private CountDownTimer temporizador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contra_maquina);
 
-        b0 = findViewById(R.id.boton_20);
-        b1 = findViewById(R.id.boton_21);
-        b2 = findViewById(R.id.boton_22);
-        b3 = findViewById(R.id.boton_23);
-        b4 = findViewById(R.id.boton_24);
-        b5 = findViewById(R.id.boton_25);
-        b6 = findViewById(R.id.boton_26);
-        b7 = findViewById(R.id.boton_27);
-        b8 = findViewById(R.id.boton_28);
+        botones[0] = findViewById(R.id.boton_20);
+        botones[1] = findViewById(R.id.boton_21);
+        botones[2] = findViewById(R.id.boton_22);
+        botones[3] = findViewById(R.id.boton_23);
+        botones[4] = findViewById(R.id.boton_24);
+        botones[5] = findViewById(R.id.boton_25);
+        botones[6] = findViewById(R.id.boton_26);
+        botones[7] = findViewById(R.id.boton_27);
+        botones[8] = findViewById(R.id.boton_28);
 
         anotaciones = findViewById(R.id.text_notas_maquina);
 
         nueva_partida();
-
     }
 
-    private void nueva_partida(){
+    @Override
+    protected void onDestroy() {
+        //Si se sale de la pantalla no hace falta preparar la siguiente partida
+        if (temporizador != null) {
+            temporizador.cancel();
+        }
+        super.onDestroy();
+    }
 
-        maquina.setContador(0);
+    private void nueva_partida() {
+
+        maquina.reiniciar();
+        Reglas.vaciar(tablero);
 
         anotaciones.setText("Tu turno");
 
-        b0.setEnabled(true);
-        b1.setEnabled(true);
-        b2.setEnabled(true);
-        b3.setEnabled(true);
-        b4.setEnabled(true);
-        b5.setEnabled(true);
-        b6.setEnabled(true);
-        b7.setEnabled(true);
-        b8.setEnabled(true);
+        for (ImageButton b : botones) {
+            b.setEnabled(true);
+            b.setImageResource(R.drawable.vacio);
+        }
 
-        b0.setImageResource(R.drawable.vacio);
-        b1.setImageResource(R.drawable.vacio);
-        b2.setImageResource(R.drawable.vacio);
-        b3.setImageResource(R.drawable.vacio);
-        b4.setImageResource(R.drawable.vacio);
-        b5.setImageResource(R.drawable.vacio);
-        b6.setImageResource(R.drawable.vacio);
-        b7.setImageResource(R.drawable.vacio);
-        b8.setImageResource(R.drawable.vacio);
-
-        contador = r.nextInt(2);
-
-        vaciar_tablero();
-
-        inicio();
-
-
-    }
-
-    private void inicio(){
-
-        if(contador%2 == 0){
+        //La mitad de las veces empieza la máquina
+        if (r.nextBoolean()) {
             turno_maquina();
         }
-
     }
 
-    public void turno_usuario(View v){
+    //Se llama desde el layout (android:onClick) al pulsar una casilla
+    public void turno_usuario(View v) {
 
-        ImageButton b = (ImageButton) v;
+        int casilla = indice_de(v);
 
-        b.setImageResource(R.drawable.cruz);
+        if (casilla == -1 || tablero[casilla / 3][casilla % 3] != Reglas.VACIO) {
+            return;
+        }
 
-        annadir_a_matriz_usuario(b);
+        marcar(casilla, USUARIO, R.drawable.cruz);
 
-        b.setEnabled(false);
-
-        boolean ganar = comprobar_ganador();
-        boolean empate = comprobar_empate();
-
-        if(!empate){
+        if (!partida_terminada()) {
             turno_maquina();
         }
-
-
     }
 
-    private void turno_maquina(){
+    private void turno_maquina() {
 
-        ImageButton b = annadir_a_matriz_pc(maquina.retorna_posicion(tablero));
+        //La máquina devuelve {fila, columna} y ya deja su ficha puesta en el tablero
+        int[] posicion = maquina.retorna_posicion(tablero);
 
-        b.setImageResource(R.drawable.circulo);
-
-        b.setEnabled(false);
-
-        comprobar_ganador();
-        comprobar_empate();
-
-
-    }
-
-    private ImageButton annadir_a_matriz_pc(int[] posicion){
-
-        ImageButton boton = b0;
-
-        if(posicion[0] == 0 &&  posicion[1] == 0){
-
-            this.tablero[0][posicion[0]] = 5;
-            boton = b0;
-
-        }else if(posicion[0] == 0 &&  posicion[1] == 1){
-
-            this.tablero[0][1] = 5;
-            boton = b1;
-
-        }else if(posicion[0] == 0 &&  posicion[1] == 2){
-
-            this.tablero[0][2] = 5;
-            boton = b2;
-
-        }else if(posicion[0] == 1 &&  posicion[1] == 0){
-
-            this.tablero[1][0] = 5;
-            boton = b3;
-
-        }else if(posicion[0] == 1 &&  posicion[1] == 1){
-
-            this.tablero[1][1] = 5;
-            boton = b4;
-
-        }else if(posicion[0] == 1 &&  posicion[1] == 2){
-
-            this.tablero[1][2] = 5;
-            boton = b5;
-
-        }else if(posicion[0] == 2 &&  posicion[1] == 0){
-
-            this.tablero[2][0] = 5;
-            boton = b6;
-
-        }else if(posicion[0] == 2 &&  posicion[1] == 1){
-
-            this.tablero[2][1] = 5;
-            boton = b7;
-
-        }else if(posicion[0] == 2 &&  posicion[1] == 2){
-
-            this.tablero[2][2] = 5;
-            boton = b8;
-
+        if (posicion[0] == -1) {
+            return;
         }
 
-        return boton;
+        marcar(posicion[0] * 3 + posicion[1], MAQUINA, R.drawable.circulo);
 
+        if (!partida_terminada()) {
+            anotaciones.setText("Tu turno");
+        }
     }
 
-    private void annadir_a_matriz_usuario(ImageButton b){
+    //Pone la ficha en el tablero y su imagen en el botón
+    private void marcar(int casilla, int ficha, int imagen) {
+        tablero[casilla / 3][casilla % 3] = ficha;
+        botones[casilla].setImageResource(imagen);
+        botones[casilla].setEnabled(false);
+    }
 
-        if(b.getId() == R.id.boton_20){
+    //Comprueba si hay ganador o empate. Si la partida ha terminado lo muestra y prepara otra
+    private boolean partida_terminada() {
 
-            this.tablero[0][0] = 1;
+        int ganador = Reglas.ganador(tablero);
 
-        }else if(b.getId() == R.id.boton_21){
-
-            this.tablero[0][1] = 1;
-
-        }else if(b.getId() == R.id.boton_22){
-
-            this.tablero[0][2] = 1;
-
-        }else if(b.getId() == R.id.boton_23){
-
-            this.tablero[1][0] = 1;
-
-        }else if(b.getId() == R.id.boton_24){
-
-            this.tablero[1][1] = 1;
-
-        }else if(b.getId() == R.id.boton_25){
-
-            this.tablero[1][2] = 1;
-
-        }else if(b.getId() == R.id.boton_26){
-
-            this.tablero[2][0] = 1;
-
-        }else if(b.getId() == R.id.boton_27){
-
-            this.tablero[2][1] = 1;
-
-        }else if(b.getId() == R.id.boton_28){
-
-            this.tablero[2][2] = 1;
-
+        if (ganador == USUARIO) {
+            anotaciones.setText("¡Has ganado!");
+        } else if (ganador == MAQUINA) {
+            anotaciones.setText("Gana la máquina");
+        } else if (Reglas.estaLleno(tablero)) {
+            anotaciones.setText("¡Empate!");
+        } else {
+            return false;
         }
 
+        parar_todo();
+        return true;
     }
 
-    private boolean comprobar_ganador(){
-
-        boolean ganador = false;
-
-        //Horizontal
-        for (int i = 0; i < 3; i++) {
-            if (tablero[i][0] + tablero[i][1] + tablero[i][2] == 15) {
-
-                ganador = true;
-                anotaciones.setText("Ganana PC");
-
-            }else if(tablero[i][0] + tablero[i][1] + tablero[i][2] == 3){
-
-                ganador = true;
-                anotaciones.setText("Gananaste!!");
-
+    //Devuelve el número de casilla (0-8) del botón pulsado
+    private int indice_de(View v) {
+        for (int i = 0; i < botones.length; i++) {
+            if (botones[i] == v) {
+                return i;
             }
         }
-
-        //Vertical
-        for (int j = 0; j < 3; j++) {
-            if (tablero[0][j] + tablero[1][j] + tablero[2][j] == 15) {
-
-                ganador = true;
-                anotaciones.setText("Ganana PC");
-
-            }else if(tablero[0][j] + tablero[1][j] + tablero[2][j] == 3){
-
-                ganador = true;
-                anotaciones.setText("Gananaste!!");
-
-            }
-        }
-
-        //Diagonal //00 11 22 | 02 11 20
-        if ((tablero[0][0] + tablero[1][1] + tablero[2][2] == 15) || (tablero[0][2] + tablero[1][1] + tablero[2][0] == 15)) {
-
-            ganador = true;
-            anotaciones.setText("Ganana PC");
-
-        } else if ((tablero[0][0] + tablero[1][1] + tablero[2][2] == 3) || (tablero[0][2] + tablero[1][1] + tablero[2][0] == 3)) {
-
-            ganador = true;
-            anotaciones.setText("Gananaste!!");
-
-        }
-
-        if(ganador){
-            anotaciones.setText("Gana PC");
-            parar_todo();
-        }
-
-        return ganador;
-
+        return -1;
     }
 
-    private boolean comprobar_empate(){
+    //Bloquea el tablero y empieza una partida nueva pasados unos segundos
+    private void parar_todo() {
 
-        boolean empate = true;
-
-        for (int i = 0; i < tablero.length; i++) { // Recorrer filas
-            for (int j = 0; j < tablero[i].length; j++) { // Recorrer columnas
-                if(tablero[i][j] == 0){
-                    empate = false;
-                }
-            }
-
-            System.out.println();
+        for (ImageButton b : botones) {
+            b.setEnabled(false);
         }
 
-        if(empate){
-            anotaciones.setText("EMPATE!!");
-            parar_todo();
-        }
-
-        return empate;
-
-    }
-
-    private void parar_todo(){
-        b0.setEnabled(false);
-        b1.setEnabled(false);
-        b2.setEnabled(false);
-        b3.setEnabled(false);
-        b4.setEnabled(false);
-        b5.setEnabled(false);
-        b6.setEnabled(false);
-        b7.setEnabled(false);
-        b8.setEnabled(false);
-
-        CountDownTimer countDownTimer = new CountDownTimer(2000, 2000) {
+        temporizador = new CountDownTimer(ESPERA_NUEVA_PARTIDA_MS, ESPERA_NUEVA_PARTIDA_MS) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -328,20 +168,6 @@ public class contra_maquina extends AppCompatActivity {
                 nueva_partida();
             }
         };
-        countDownTimer.start();
-
+        temporizador.start();
     }
-
-    private void vaciar_tablero(){
-
-        for (int i = 0; i < tablero.length; i++) { // Recorrer filas
-            for (int j = 0; j < tablero[i].length; j++) { // Recorrer columnas
-                tablero[i][j] = 0;
-            }
-
-            System.out.println();
-        }
-
-    }
-
 }
