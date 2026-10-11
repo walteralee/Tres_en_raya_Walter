@@ -106,6 +106,10 @@ El tablero es una matriz 3×3 en la que cada jugador usa un número (1 o 5). As�
 
 **Walter Alejandro Cutiño Ledo** · [github.com/walteralee](https://github.com/walteralee)
 
+## Licencia
+
+Proyecto de uso educativo y personal.
+
 ---
 
 ## English
